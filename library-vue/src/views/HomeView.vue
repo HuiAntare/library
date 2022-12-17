@@ -39,11 +39,18 @@ export default {
   name: 'HomeView',
   data(){
     return {
-      tableData:[
-        { name:'王二',age:20,address:'北京市',phone: '18798540990',sex:'男'},
-        { name:'张三',age:20,address:'北京市',phone: '18798540990',sex:'男'},
-        { name:'李四',age:20,address:'北京市',phone: '18798540990',sex:'女'},
-      ]
+      tableData:[]
+    }
+  },
+  created() {
+    this.load()
+  },
+  methods:{
+    load(){
+      fetch('http://localhost:8090/user/list').then(res => res.json()).then(res => {
+        console.log(res)
+        this.tableData = res
+      })
     }
   }
 }
