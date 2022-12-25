@@ -28,4 +28,9 @@ public class UserService implements IUserService {
         List<User> users = userMapper.listByCondition(userPageRequest);//条件查询
         return new PageInfo<>(users);
     }
+
+    @Override
+    public void save(User user) {
+       userMapper.save(user);
+    }
 }

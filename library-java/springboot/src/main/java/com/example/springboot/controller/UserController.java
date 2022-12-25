@@ -17,6 +17,12 @@ public class UserController {
     @Autowired
     IUserService userService;
 
+    @PostMapping ("/save")                 //新增接口
+    public Result save(@RequestBody User user){       //使用注解将json转成user对象
+        userService.save(user);
+        return Result.success();
+    }
+
     @GetMapping("/list")
     public Result list(){                        //查询user
         List<User> users = userService.list();

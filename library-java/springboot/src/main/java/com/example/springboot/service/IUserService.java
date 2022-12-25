@@ -8,4 +8,6 @@ public interface IUserService {
     List<User> list();     //返回所有数据的方法(接口)    未实现-->impl里实现类
 
     Object page(UserPageRequest userPageRequest);
+
+    void save(User user);
 }

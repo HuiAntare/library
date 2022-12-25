@@ -10,7 +10,7 @@ public class Result {
 
 
     private String code;  //状态码
-    private Object data;  //后台数据
+    private Object data;  //包装后台数据   也是User的数据信息
     private String msg;   //存放错误的信息
 
 
@@ -36,5 +36,4 @@ public class Result {
         result.setMsg(msg);
         return result;
     }
-
 }

@@ -12,4 +12,6 @@ public interface UserMapper {
     List<User> list();     //返回所有数据的方法(接口)
 
     List<User> listByCondition(UserPageRequest userPageRequest);
+
+    void save(User user);
 }
