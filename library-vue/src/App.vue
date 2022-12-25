@@ -18,9 +18,10 @@
           <el-submenu index="/">
             <template slot="title">
               <i class="el-icon-question"></i>
-              <span>关于页面</span>
+              <span>会员管理</span>
             </template>
-            <el-menu-item index="about">关于详情</el-menu-item>
+            <el-menu-item index="addUser">会员添加</el-menu-item>
+            <el-menu-item index="user">会员列表</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>

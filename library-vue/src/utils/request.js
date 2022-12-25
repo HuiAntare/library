@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const request = axios.create({
-    baseURL:'http://localhost:8090',    //后台地址,会直接加上
+    baseURL:'http://localhost:9090',    //后台地址,会直接加上
     timeout:5000
 })
 
