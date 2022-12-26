@@ -1,8 +1,8 @@
-## library(图书管理系统)
+## library(图书借阅管理系统)
 
->成员:张文辉 王斌
+>成员:张文辉
 >
->技术栈 : Springboot + Vue + Mybatis集成
+>技术栈 : Springboot + Vue + Mybatis
 
 ```
 编译环境:
