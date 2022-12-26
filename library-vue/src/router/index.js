@@ -20,7 +20,6 @@ const routes = [
     name: 'AddUser',
     component: () => import('@/views/user/AddUser')
   },
-
 ]
 
 const router = new VueRouter({

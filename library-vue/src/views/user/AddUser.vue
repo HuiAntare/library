@@ -50,6 +50,7 @@ export default {
         }else{
           this.$notify.error(res.msg)
         }
+        this.form = {}
       })
     }
   }
