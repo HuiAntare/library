@@ -8,9 +8,6 @@
       <el-form-item label="姓名">
         <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
       </el-form-item>
-      <el-form-item label="用户名">
-        <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
-      </el-form-item>
       <el-form-item label="年龄">
         <el-input v-model="form.age" placeholder="请输入年龄"></el-input>
       </el-form-item>
@@ -47,10 +44,10 @@ export default {
       request.post('/user/save',this.form).then(res => {
         if(res.code === '200'){
           this.$notify.success('新增成功')
+          this.form = {}
         }else{
           this.$notify.error(res.msg)
         }
-        this.form = {}
       })
     }
   }

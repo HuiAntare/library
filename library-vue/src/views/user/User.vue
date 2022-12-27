@@ -11,11 +11,19 @@
 
     <!-- 表单头部-->
     <el-table :data="tableData" stripe>     <!-- prop写属性，label写名字-->
+      <el-table-column prop="id" label="编号" width="80px"></el-table-column>
       <el-table-column prop="name" label="名称"></el-table-column>
       <el-table-column prop="age" label="年龄"></el-table-column>
       <el-table-column prop="address" label="地址"></el-table-column>
       <el-table-column prop="phone" label="联系方式"></el-table-column>
       <el-table-column prop="sex" label="性别"></el-table-column>
+
+      <el-table-column label="操作">
+        <template v-slot="scope">
+<!--       scrop.row 就是当前的行数据-->
+          <el-button type="primary">编辑</el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
 

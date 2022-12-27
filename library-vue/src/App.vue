@@ -10,7 +10,7 @@
     <div style="display: flex">
       <!-- 侧边栏(导航栏) -->
       <div style="width:200px;min-height:calc(100vh - 62px);overflow: hidden;margin-right:2px;background-color: white">       <!-- 给宽200，超出隐藏 -->
-        <el-menu :default-active="$router.path" :default-openeds="['/']" router class="el-menu-demo">       <!-- []设置默认打开的菜单 -->
+        <el-menu :default-active="$router.path.substring(1)" :default-openeds="['/']" router class="el-menu-demo">       <!-- []设置默认打开的菜单 -->
           <el-menu-item index="/">                   <!-- index里的path -->
             <i class="el-icon-s-home"></i>
             <span>首页</span>
