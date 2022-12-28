@@ -1,7 +1,6 @@
 package com.example.springboot.service.impl;
 
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.IdUtil;
 import com.example.springboot.controller.request.UserPageRequest;
 import com.example.springboot.entity.User;
 import com.example.springboot.mapper.UserMapper;
@@ -32,11 +31,27 @@ public class UserService implements IUserService {
         return new PageInfo<>(users);
     }
 
-    @Override
+    @Override             //新增
     public void save(User user) {
         Date date = new Date();
         //当做卡号去处理(采用日期＋唯一uuid生成)
-        user.setUsername(DateUtil.format(date,"yyyyMMdd") + IdUtil.fastSimpleUUID());
+        user.setUuid(DateUtil.format(date,"yyyy") + user.getUuid());
        userMapper.save(user);
+    }
+
+    @Override
+    public User getById(Integer id) {
+        return userMapper.getById(id);
+    }
+
+    @Override
+    public void update(User user) {
+        user.setUpdatetime(new Date());
+        userMapper.updateById(user);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        userMapper.deleteById(id);
     }
 }

@@ -5,9 +5,17 @@
 <mapper namespace="com.example.springboot.mapper.UserMapper">
 
     <insert id="save">
-        insert into user(name,username,age,sex,phone,address)
-        values(#{name},#{username},#{age},#{sex},#{phone},#{address})
+        insert into user(name,uuid,age,sex,phone,address)
+        values(#{name},#{uuid},#{age},#{sex},#{phone},#{address})
     </insert>
+
+    <update id="updateById">
+        update user set name = #{name},age = #{age},sex = #{sex},phone = #{phone},address = #{address},updatetime = #{updatetime} where id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        delete from user where id = #{id}
+    </delete>
 
     <select id="list" resultType="com.example.springboot.entity.User">   <!-- id为方法名,结果为实体对象-->
         select * from user
@@ -20,11 +28,15 @@
                 <if test="name != null and name != ''">
                     name like concat('%',#{ name },'%')
                 </if>
-                <if test="phone != null and phone != ''">
-                    and phone like concat('%',#{ phone },'%')
+                <if test="uuid != null and uuid != ''">
+                    and uuid like concat('%',#{uuid},'%')
                 </if>
             </where>
         order by id desc
+    </select>
+
+    <select id="getById" resultType="com.example.springboot.entity.User">
+        select * from user where id = #{id}
     </select>
 
 </mapper>

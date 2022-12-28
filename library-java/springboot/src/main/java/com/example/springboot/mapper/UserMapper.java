@@ -3,7 +3,6 @@ package com.example.springboot.mapper;
 import com.example.springboot.controller.request.UserPageRequest;
 import com.example.springboot.entity.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -14,4 +13,10 @@ public interface UserMapper {
     List<User> listByCondition(UserPageRequest userPageRequest);
 
     void save(User user);
+
+    User getById(Integer id);
+
+    void updateById(User user);
+
+    void deleteById(Integer id);
 }

@@ -10,4 +10,10 @@ public interface IUserService {
     Object page(UserPageRequest userPageRequest);
 
     void save(User user);
+
+    User getById(Integer id);
+
+    void update(User user);
+
+    void deleteById(Integer id);
 }

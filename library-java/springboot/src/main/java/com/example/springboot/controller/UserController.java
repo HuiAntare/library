@@ -23,6 +23,24 @@ public class UserController {
         return Result.success();
     }
 
+    @PutMapping("/update")                 //更新接口
+    public Result update(@RequestBody User user){
+        userService.update(user);
+        return Result.success();
+    }
+
+    @DeleteMapping("/delete/{id}") //删除数据
+    public Result delete(@PathVariable Integer id){
+        userService.deleteById(id);
+        return Result.success();
+    }
+
+    @GetMapping("/{id}")                //根据id修改信息接口
+    public Result getById(@PathVariable Integer id){
+        User user = userService.getById(id);
+        return Result.success(user);
+    }
+
     @GetMapping("/list")
     public Result list(){                        //查询user
         List<User> users = userService.list();
