@@ -34,7 +34,7 @@ public class UserService implements IUserService {
     @Override             //新增
     public void save(User user) {
         Date date = new Date();
-        //当做卡号去处理(采用日期＋唯一uuid生成)
+        //当做卡号去处理(采用日期＋uuid学号生成)
         user.setUuid(DateUtil.format(date,"yyyy") + user.getUuid());
        userMapper.save(user);
     }
