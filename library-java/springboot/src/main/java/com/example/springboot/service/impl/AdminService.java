@@ -1,10 +1,9 @@
 package com.example.springboot.service.impl;
 
-import cn.hutool.core.date.DateUtil;
-import com.example.springboot.controller.request.UserPageRequest;
-import com.example.springboot.entity.User;
-import com.example.springboot.mapper.UserMapper;
-import com.example.springboot.service.IUserService;
+import com.example.springboot.controller.request.AdminPageRequest;
+import com.example.springboot.entity.Admin;
+import com.example.springboot.mapper.AdminMapper;
+import com.example.springboot.service.IAdminService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,44 +13,41 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class UserService implements IUserService {
+public class AdminService implements IAdminService {
 
     @Autowired       //导入UserMapper,
-    UserMapper userMapper;
+    AdminMapper adminMapper;
 
     @Override
-    public List<User> list() {
-        return userMapper.list();
+    public List<Admin> list() {
+        return adminMapper.list();
     }
 
     @Override
-    public Object page(UserPageRequest userPageRequest) {
-        PageHelper.startPage(userPageRequest.getPageNum(),userPageRequest.getPageSize());  //插件处理数量和页数
-        List<User> users = userMapper.listByCondition(userPageRequest);//条件查询
-        return new PageInfo<>(users);
+    public Object page(AdminPageRequest adminPageRequest) {
+        PageHelper.startPage(adminPageRequest.getPageNum(),adminPageRequest.getPageSize());  //插件处理数量和页数
+        List<Admin> admins = adminMapper.listByCondition(adminPageRequest);//条件查询
+        return new PageInfo<>(admins);
     }
 
     @Override             //新增
-    public void save(User user) {
-        Date date = new Date();
-        //当做卡号去处理(采用日期＋uuid学号生成)
-        user.setUuid(DateUtil.format(date,"yyyy") + user.getUuid());
-       userMapper.save(user);
+    public void save(Admin admin) {
+       adminMapper.save(admin);
     }
 
     @Override
-    public User getById(Integer id) {
-        return userMapper.getById(id);
+    public Admin getById(Integer id) {
+        return adminMapper.getById(id);
     }
 
     @Override
-    public void update(User user) {
-        user.setUpdatetime(new Date());
-        userMapper.updateById(user);
+    public void update(Admin admin) {
+        admin.setUpdatetime(new Date());
+        adminMapper.updateById(admin);
     }
 
     @Override
     public void deleteById(Integer id) {
-        userMapper.deleteById(id);
+        adminMapper.deleteById(id);
     }
 }
