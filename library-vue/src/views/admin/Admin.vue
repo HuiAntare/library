@@ -2,8 +2,8 @@
   <div>
     <!-- 搜索表单-->
     <div style="margin-bottom: 20px">
-      <el-input style="width:240px" placeholder="请输入用户名" v-model="params.name"></el-input>
-      <el-input style="width:240px;margin-left: 5px" placeholder="请输入学号" v-model="params.phone"></el-input>
+      <el-input style="width:240px" placeholder="请输入用户名" v-model="params.username"></el-input>
+      <el-input style="width:240px;margin-left: 5px" placeholder="请输入联系方式" v-model="params.phone"></el-input>
       <el-input style="width:240px;margin-left: 5px" placeholder="请输入邮箱" v-model="params.email"></el-input>
       <el-button style="margin-left: 5px" type="primary" @click="load"><i class="el-icon-search">搜索</i></el-button>
       <el-button style="margin-left: 5px" type="warning" @click="reset"><i class="el-icon-refresh">重置</i></el-button>
@@ -69,7 +69,6 @@ export default {
         phone:'',
         email:''
       },
-      dialogVisible: false
     }
   },
   created() {

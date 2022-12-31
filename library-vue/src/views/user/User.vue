@@ -70,7 +70,6 @@ export default {
         name:'',
         phone:''
       },
-      dialogVisible: false
     }
   },
   created() {
