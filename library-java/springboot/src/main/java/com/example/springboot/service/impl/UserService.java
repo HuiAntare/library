@@ -54,4 +54,5 @@ public class UserService implements IUserService {
     public void deleteById(Integer id) {
         userMapper.deleteById(id);
     }
+
 }

@@ -1,9 +1,9 @@
 package com.example.springboot.mapper;
 
+import com.example.springboot.common.LoginResult;
 import com.example.springboot.controller.request.AdminPageRequest;
-import com.example.springboot.controller.request.UserPageRequest;
+import com.example.springboot.controller.request.LoginRequest;
 import com.example.springboot.entity.Admin;
-import com.example.springboot.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -21,4 +21,6 @@ public interface AdminMapper {
     void updateById(Admin admin);
 
     void deleteById(Integer id);
+
+    Admin getByUsernameAndPassword(LoginRequest loginRequest);
 }

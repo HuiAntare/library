@@ -17,6 +17,7 @@ public class UserController {
     @Autowired
     IUserService userService;
 
+
     @PostMapping ("/save")                 //新增接口
     public Result save(@RequestBody User user){       //使用注解将json转成user对象
         userService.save(user);
@@ -29,26 +30,26 @@ public class UserController {
         return Result.success();
     }
 
-    @DeleteMapping("/delete/{id}") //删除数据
+    @DeleteMapping("/delete/{id}")   //根据id删除数据接口
     public Result delete(@PathVariable Integer id){
         userService.deleteById(id);
         return Result.success();
     }
 
-    @GetMapping("/{id}")                //根据id修改信息接口
+    @GetMapping("/{id}")                //根据id返回对象信息接口
     public Result getById(@PathVariable Integer id){
         User user = userService.getById(id);
         return Result.success(user);
     }
 
     @GetMapping("/list")
-    public Result list(){                        //查询user
+    public Result list(){                        //查询users列表信息
         List<User> users = userService.list();
         return Result.success(users);
     }
 
     @GetMapping("/page")
-    public Result page(UserPageRequest userPageRequest){                        //分页查询
+    public Result page(UserPageRequest userPageRequest){             //分页查询
         return Result.success(userService.page(userPageRequest));    //返回的是对象
     }
 }
