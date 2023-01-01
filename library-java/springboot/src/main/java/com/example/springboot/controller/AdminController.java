@@ -22,9 +22,6 @@ public class AdminController {
     @PostMapping ("/login")                 //登录接口
     public Result login(@RequestBody LoginRequest loginRequest) {  //使用注解将json转成loginRequest对象
         LoginResult loginResult = adminService.login(loginRequest);
-        if(loginResult == null){       //
-            return Result.error("用户名或密码错误");
-        }
         return Result.success(loginResult);
     }
 

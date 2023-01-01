@@ -9,6 +9,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandle {
 
+
+    @ExceptionHandler(value = ServiceException.class)
+    public Result serviceExceptionError(ServiceException e){   //捕获到异常
+        log.error("业务异常",e);  //后台打印
+        return Result.error(e.getMessage());
+    }
+
     //全局异常处理
     @ExceptionHandler(value = Exception.class)
     public Result exceptionError(Exception e){   //捕获到异常
