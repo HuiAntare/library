@@ -1,5 +1,7 @@
 package com.example.springboot.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.SecureUtil;
 import com.example.springboot.common.LoginResult;
 import com.example.springboot.controller.request.AdminPageRequest;
 import com.example.springboot.controller.request.LoginRequest;
@@ -21,6 +23,9 @@ import java.util.List;
 @Slf4j
 public class AdminService implements IAdminService {
 
+    private static final String DEFAULT_PASSWORD = "123";
+    private static final String PASSWORD_SALT = "****";
+
     @Autowired       //导入UserMapper,
     AdminMapper adminMapper;
 
@@ -37,7 +42,12 @@ public class AdminService implements IAdminService {
     }
 
     @Override             //新增
-    public void save(Admin                                                                                   admin) {
+    public void save(Admin admin) {
+        //默认密码: 123
+        if(StrUtil.isBlank(admin.getPassword())){
+            admin.setPassword(DEFAULT_PASSWORD);
+        }
+        admin.setPassword(securePassWord(admin.getPassword())); //设置md5加密+加盐
        adminMapper.save(admin);
     }
 
@@ -59,6 +69,7 @@ public class AdminService implements IAdminService {
 
     @Override
     public LoginResult login(LoginRequest loginRequest) {
+        loginRequest.setPassword(securePassWord(loginRequest.getPassword()));
         Admin admin = adminMapper.getByUsernameAndPassword(loginRequest);
         if(admin == null){
             throw new ServiceException("用户名或密码错误");
@@ -66,6 +77,10 @@ public class AdminService implements IAdminService {
         LoginResult loginResult = new LoginResult();
         BeanUtils.copyProperties(admin,loginResult);
         return loginResult;
+    }
+
+    private String securePassWord(String password){
+        return SecureUtil.md5(password + PASSWORD_SALT);
     }
 }
 
