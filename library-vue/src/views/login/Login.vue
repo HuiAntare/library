@@ -24,6 +24,7 @@
 
 <script>
 import request from "@/utils/request";
+import Cookies from 'js-cookie'
 
 export default {
   name:'Login',
@@ -50,6 +51,9 @@ export default {
             if(res.code == '200'){
               this.$notify.success("登录成功")
               this.$router.push('/')
+              if(res.data != null){   //判断数据存在并且有值才会存入
+                Cookies.set('admin',JSON.stringify(res.data))
+              }
             }else{
               this.$notify.error(res.msg)
               this.admin = admin

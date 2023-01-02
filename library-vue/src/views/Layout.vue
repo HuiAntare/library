@@ -11,7 +11,7 @@
       <div style="flex: 1;text-align: right;padding-right: 30px">
         <el-dropdown size="medium" style="cursor: pointer">
           <span class="el-dropdown-link">
-            管理员<i class="el-icon-arrow-down el-icon--right"></i>
+            {{ admin.username }}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown" style="margin-top: -5px">
             <el-dropdown-item>
@@ -70,12 +70,21 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
+
 export default {
   name: "Layout",
+  data(){
+    return{
+      //数据可能没有,因此用三元判断一下(有就转化为JSON对象,没有为空)
+      admin: Cookies.get('admin') ? JSON.parse(Cookies.get('admin')) : {}
+    }
+  },
   methods:{
     logout(){
-      this.$router.push('/login')
       //清除浏览器用户数据
+      Cookies.remove('admin')
+      this.$router.push('/login')
     }
   }
 }
