@@ -2,7 +2,7 @@ package com.example.springboot.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
-import com.example.springboot.Utils.TokenUtils;
+import com.example.springboot.utils.TokenUtils;
 import com.example.springboot.common.LoginResult;
 import com.example.springboot.controller.request.AdminPageRequest;
 import com.example.springboot.controller.request.LoginRequest;

@@ -1,4 +1,4 @@
-package com.example.springboot.Utils;
+package com.example.springboot.utils;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
