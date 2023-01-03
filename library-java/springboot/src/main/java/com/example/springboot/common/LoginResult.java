@@ -8,4 +8,5 @@ public class LoginResult {
     private String username;
     private String phone;
     private String email;
+    private String token;
 }

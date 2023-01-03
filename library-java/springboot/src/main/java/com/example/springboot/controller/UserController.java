@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin        //解决跨域
 @RestController   //返回的数据都以json返回
 @RequestMapping("/user")           //一级目录,任何子集目录都要带上此前缀
 public class UserController {

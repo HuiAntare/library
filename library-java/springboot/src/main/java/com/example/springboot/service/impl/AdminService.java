@@ -2,9 +2,11 @@ package com.example.springboot.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
+import com.example.springboot.Utils.TokenUtils;
 import com.example.springboot.common.LoginResult;
 import com.example.springboot.controller.request.AdminPageRequest;
 import com.example.springboot.controller.request.LoginRequest;
+import com.example.springboot.controller.request.PassWordRequest;
 import com.example.springboot.entity.Admin;
 import com.example.springboot.exception.ServiceException;
 import com.example.springboot.mapper.AdminMapper;
@@ -70,13 +72,27 @@ public class AdminService implements IAdminService {
     @Override
     public LoginResult login(LoginRequest loginRequest) {
         loginRequest.setPassword(securePassWord(loginRequest.getPassword()));
-        Admin admin = adminMapper.getByUsernameAndPassword(loginRequest);
+        Admin admin = adminMapper.getByUsernameAndPassword(loginRequest.getUsername(),loginRequest.getPassword());
         if(admin == null){
             throw new ServiceException("用户名或密码错误");
         }
         LoginResult loginResult = new LoginResult();
         BeanUtils.copyProperties(admin,loginResult);
+        //生成token
+        String token = TokenUtils.genToken(String.valueOf(admin.getId()), admin.getPassword());
+        loginResult.setToken(token);
         return loginResult;
+    }
+
+    @Override
+    public void changePass(PassWordRequest passWordRequest) {
+        //要对新的密码加密
+        passWordRequest.setNewPass(securePassWord(passWordRequest.getNewPass()));
+
+        int count = adminMapper.updatePassword(passWordRequest);
+        if(count <= 0){
+            throw new ServiceException("修改密码失败");
+        }
     }
 
     private String securePassWord(String password){

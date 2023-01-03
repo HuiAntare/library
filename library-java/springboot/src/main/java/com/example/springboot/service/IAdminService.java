@@ -3,6 +3,7 @@ package com.example.springboot.service;
 import com.example.springboot.common.LoginResult;
 import com.example.springboot.controller.request.AdminPageRequest;
 import com.example.springboot.controller.request.LoginRequest;
+import com.example.springboot.controller.request.PassWordRequest;
 import com.example.springboot.entity.Admin;
 
 import java.util.List;
@@ -21,4 +22,7 @@ public interface IAdminService {
     void deleteById(Integer id);
 
     LoginResult login(LoginRequest loginRequest);
+
+    void changePass(PassWordRequest passWordRequest);
 }
+
