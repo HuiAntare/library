@@ -50,10 +50,10 @@ export default {
           request.post('/admin/login',this.admin).then(res => {
             if(res.code == '200'){
               this.$notify.success("登录成功")
-              this.$router.push('/')
-              if(res.data != null){   //判断数据存在并且有值才会存入
+              if(res.data != null){    //判断数据存在并且有值才会存入,后跳转
                 Cookies.set('admin',JSON.stringify(res.data))
               }
+              this.$router.push('/')   //跳转进入路由守卫
             }else{
               this.$notify.error(res.msg)
               this.admin = admin

@@ -1,10 +1,10 @@
 //工具类
 import axios from "axios";
-import router from "@/router"
+import router from "@/router";
 import Cookies from "js-cookie";
 
 const request = axios.create({
-    baseURL:'http://localhost:9090',    //后台地址,会直接加上
+    baseURL:'http://localhost:9090/api',    //后台地址,会直接加上
     timeout:5000
 })
 
@@ -16,13 +16,11 @@ const request = axios.create({
 request.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8';
 
-    //请求拦截器
-    const admin = Cookies.get('admin') //拿到admin信息,判断它有没有
-    if(!admin){  //无信息就push到登录界面
-        router.push('/login') //请求用户数据时,就会返回login页面
+    const adminJson = Cookies.get('admin')
+    if(adminJson){
+        //设置请求头
+        config.headers['token'] = JSON.parse(adminJson).token
     }
-
-    //config.headers['token'] = user. token;   //设置请求头
     return config
 },error => {
     return Promise.reject(error)
@@ -37,6 +35,9 @@ request.interceptors.response.use(
         // 兼容服务器返回的字符串数据
         if(typeof res === 'string') {      //对返回的数据类型判断
             res = res ? JSON.parse(res) :res   //若是String,则进行json解析,返回
+        }
+        if(res.code === '401'){
+            router.push('login')
         }
         return res;
     },

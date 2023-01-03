@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '@/views/Layout.vue'
+import Cookies from "js-cookie";
 
 Vue.use(VueRouter)
 
@@ -59,12 +60,29 @@ const routes = [
       },
     ]
   },
+
+    //若上面的路由都没有时,则跳转404
+  {
+    path: "*",
+    component: () => import('@/views/404.vue')
+  }
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to,form,next) => {
+  //如果将要到login路由直接放行
+  if(to.path === 'login') next()
+  //放行后获取到admin的数据
+  const admin = Cookies.get('admin')
+  //若没有admin的数据并且跳转路径不是login,则强行返回到login
+  if(!admin && to.path !== '/login') return next("login")
+  //若访问 /home 的时候,并且cookie有缓存数据,则直接放行
+  next()
 })
 
 export default router
