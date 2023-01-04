@@ -1,9 +1,10 @@
 package com.example.springboot.service.impl;
 
-import com.example.springboot.controller.request.CategoryPageRequest;
-import com.example.springboot.entity.Category;
-import com.example.springboot.mapper.CategoryMapper;
-import com.example.springboot.service.ICategoryService;
+import cn.hutool.core.collection.CollUtil;
+import com.example.springboot.controller.request.BookPageRequest;
+import com.example.springboot.entity.Book;
+import com.example.springboot.mapper.BookMapper;
+import com.example.springboot.service.IBookService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -15,42 +16,52 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class BookService implements ICategoryService {
+public class BookService implements IBookService {
 
     @Autowired       //导入categoryMapper,
-    CategoryMapper categoryMapper;
+    BookMapper bookMapper;
 
     @Override
-    public List<Category> list() {
-        return categoryMapper.list();
+    public List<Book> list() {
+        return bookMapper.list();
     }
 
     @Override
-    public Object page(CategoryPageRequest categoryPageRequest) {
-        PageHelper.startPage(categoryPageRequest.getPageNum(),categoryPageRequest.getPageSize());  //插件处理数量和页数
-        //自关联查询
-        List<Category> categories = categoryMapper.listByCondition(categoryPageRequest);//条件查询
-        return new PageInfo<>(categories);
+    public Object page(BookPageRequest bookPageRequest) {
+        PageHelper.startPage(bookPageRequest.getPageNum(),bookPageRequest.getPageSize());  //插件处理数量和页数
+        List<Book> books = bookMapper.listByCondition(bookPageRequest);//条件查询
+        return new PageInfo<>(books);
     }
 
     @Override
-    public void save(Category category) {
-        categoryMapper.save(category);
+    public void save(Book book) {
+        book.setCategory(category(book.getCategories()));
+        bookMapper.save(book);
     }
 
     @Override
-    public Category getById(Integer id) {
-        return categoryMapper.getById(id);
+    public Book getById(Integer id) {
+        return bookMapper.getById(id);
     }
 
     @Override
-    public void update(Category category) {
-        category.setUpdatetime(LocalDate.now());
-        categoryMapper.updateById(category);
+    public void update(Book book) {
+        book.setCategory(category(book.getCategories()));
+        book.setUpdatetime(LocalDate.now());
+        bookMapper.updateById(book);
     }
 
     @Override
     public void deleteById(Integer id) {
-        categoryMapper.deleteById(id);
+        bookMapper.deleteById(id);
+    }
+
+    private String category(List<String> categories){
+        StringBuilder sb = new StringBuilder();
+        if(CollUtil.isNotEmpty(categories)){
+            categories.forEach(v -> sb.append(v).append(" > "));
+            return sb.substring(0,sb.lastIndexOf(" > "));
+        }
+        return sb.toString();
     }
 }

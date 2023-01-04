@@ -19,14 +19,14 @@ public class BorrowController {
     IBorrowService borrowService;
 
     @PostMapping("/save")
-    public Result save(@RequestBody Borrow obj) {
-        borrowService.save(obj);
+    public Result save(@RequestBody Borrow borrow) {
+        borrowService.save(borrow);
         return Result.success();
     }
 
     @PutMapping("/update")
-    public Result update(@RequestBody Borrow obj) {
-        borrowService.update(obj);
+    public Result update(@RequestBody Borrow borrow) {
+        borrowService.update(borrow);
         return Result.success();
     }
 
@@ -38,14 +38,14 @@ public class BorrowController {
 
     @GetMapping("/{id}")
     public Result getById(@PathVariable Integer id) {
-        Borrow obj = borrowService.getById(id);
-        return Result.success(obj);
+        Borrow borrow = borrowService.getById(id);
+        return Result.success(borrow);
     }
 
     @GetMapping("/list")
     public Result list() {
-        List<Borrow> list = borrowService.list();
-        return Result.success(list);
+        List<Borrow> borrows = borrowService.list();
+        return Result.success(borrows);
     }
 
     @GetMapping("/page")
@@ -59,8 +59,8 @@ public class BorrowController {
     }
 
     @PostMapping("/saveRetur")
-    public Result saveRetur(@RequestBody Retur obj) {
-        borrowService.saveRetur(obj);
+    public Result saveRetur(@RequestBody Retur retur) {
+        borrowService.saveRetur(retur);
         return Result.success();
     }
 

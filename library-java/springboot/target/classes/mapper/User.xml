@@ -5,12 +5,13 @@
 <mapper namespace="com.example.springboot.mapper.UserMapper">
 
     <insert id="save">
-        insert into user(name,uuid,age,sex,phone,address)
-        values(#{name},#{uuid},#{age},#{sex},#{phone},#{address})
+        insert into user(name,uuid,age,sex,phone,address, account)
+        values(#{name},#{uuid},#{age},#{sex},#{phone},#{address}, #{account})
     </insert>
 
     <update id="updateById">
-        update user set name = #{name},age = #{age},sex = #{sex},phone = #{phone},address = #{address},updatetime = #{updatetime} where id = #{id}
+        update user set name = #{name}, age = #{age}, sex = #{sex}, phone = #{phone}, address = #{address}, account = #{account}, status = #{status},
+                        updatetime = #{updatetime} where id = #{id}
     </update>
 
     <delete id="deleteById">
@@ -37,6 +38,10 @@
 
     <select id="getById" resultType="com.example.springboot.entity.User">
         select * from user where id = #{id}
+    </select>
+
+    <select id="getByUuid" resultType="com.example.springboot.entity.User">
+        select * from user where uuid = #{uuid}
     </select>
 
 </mapper>

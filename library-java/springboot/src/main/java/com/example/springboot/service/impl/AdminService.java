@@ -28,7 +28,7 @@ public class AdminService implements IAdminService {
     private static final String DEFAULT_PASSWORD = "123";
     private static final String PASSWORD_SALT = "****";
 
-    @Autowired       //导入UserMapper,
+    @Autowired       //导入AdminMapper,
     AdminMapper adminMapper;
 
     @Override
@@ -50,7 +50,12 @@ public class AdminService implements IAdminService {
             admin.setPassword(DEFAULT_PASSWORD);
         }
         admin.setPassword(securePassWord(admin.getPassword())); //设置md5加密+加盐
-       adminMapper.save(admin);
+        try{
+            adminMapper.save(admin);
+        }catch (Exception e){
+            log.error("数据插入失败, username:{}",admin.getUsername());
+            throw new ServiceException("用户名重复");
+        }
     }
 
     @Override
@@ -71,10 +76,25 @@ public class AdminService implements IAdminService {
 
     @Override
     public LoginResult login(LoginRequest loginRequest) {
-        loginRequest.setPassword(securePassWord(loginRequest.getPassword()));
-        Admin admin = adminMapper.getByUsernameAndPassword(loginRequest.getUsername(),loginRequest.getPassword());
+        Admin admin = null;
+        //先判断用户名是否唯一
+        try{
+            admin = adminMapper.getByUsername(loginRequest.getUsername());
+        }catch (Exception e){
+            log.error("根据用户名{} 查询出错",loginRequest.getUsername());
+            throw new ServiceException("用户名错误");
+        }
         if(admin == null){
             throw new ServiceException("用户名或密码错误");
+        }
+        //再判断密码是否合法
+        String securePass = securePassWord(loginRequest.getPassword());
+        if(!securePass.equals(admin.getPassword())){
+            throw new ServiceException("用户名或密码错误");
+        }
+        //再校验账号状态是否禁用
+        if(!admin.isStatus()){
+            throw new ServiceException("当前用户处于禁用状态,请联系管理员");
         }
         LoginResult loginResult = new LoginResult();
         BeanUtils.copyProperties(admin,loginResult);

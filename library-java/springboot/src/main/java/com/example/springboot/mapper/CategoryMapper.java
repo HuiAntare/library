@@ -1,31 +1,22 @@
 package com.example.springboot.mapper;
 
-import com.example.springboot.controller.request.AdminPageRequest;
-import com.example.springboot.controller.request.PassWordRequest;
-import com.example.springboot.entity.Admin;
+import com.example.springboot.controller.request.CategoryPageRequest;
+import com.example.springboot.entity.Category;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 @Mapper
 public interface CategoryMapper {
-    List<Admin> list();     //返回所有数据的方法(接口)
+    List<Category> list();     //返回所有数据的方法(接口)
 
-    List<Admin> listByCondition(AdminPageRequest adminPageRequest);
+    List<Category> listByCondition(CategoryPageRequest categoryPageRequest);
 
-    void save(Admin admin);
+    void save(Category category);
 
-    Admin getById(Integer id);
+    Category getById(Integer id);
 
-    void updateById(Admin admin);
+    void updateById(Category category);
 
     void deleteById(Integer id);
-
-    Admin getByUsernameAndPassword(@Param("username") String username,
-                                   @Param("password") String password);
-
-    int updatePassword(PassWordRequest passWordRequest);
-
-    Admin getByUsername(String username);
 }

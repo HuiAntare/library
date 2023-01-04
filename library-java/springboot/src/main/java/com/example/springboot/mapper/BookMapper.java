@@ -1,22 +1,25 @@
 package com.example.springboot.mapper;
 
+import com.example.springboot.controller.request.BookPageRequest;
 import com.example.springboot.controller.request.CategoryPageRequest;
-import com.example.springboot.entity.Category;
+import com.example.springboot.entity.Book;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
-public interface CategoryMapper {
-    List<Category> list();     //返回所有数据的方法(接口)
+public interface BookMapper {
+    List<Book> list();     //返回所有数据的方法(接口)
 
-    List<Category> listByCondition(CategoryPageRequest categoryPageRequest);
+    List<Book> listByCondition(BookPageRequest bookPageRequest);
 
-    void save(Category category);
+    void save(Book book);
 
-    Category getById(Integer id);
+    Book getById(Integer id);
 
-    void updateById(Category category);
+    void updateById(Book book);
 
     void deleteById(Integer id);
+    Book getByNo(String bookNo);
+    void updateNumByNo(String bookNo);
 }

@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.Map;
 
 public interface IBorrowService {
-    
+
     List<Borrow> list();
 
     PageInfo<Borrow> page(BaseRequest baseRequest);
 
-    void save(Borrow obj);
+    void save(Borrow borrow);
 
     PageInfo<Retur> pageRetur(BaseRequest baseRequest);
 

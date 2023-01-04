@@ -67,15 +67,15 @@ public class BorrowService implements IBorrowService {
 
     @Override
     @Transactional
-    public void save(Borrow obj) {
+    public void save(Borrow borrow) {
         // 1. 校验用户的积分是否足够
-        String userNo = obj.getUserNo();
-        User user = userMapper.getByUsername(userNo);
+        String userNo = borrow.getUserNo();
+        User user = userMapper.getByUuid(userNo);
         if (Objects.isNull(user)) {
             throw new ServiceException("用户不存在");
         }
         // 2. 校验图书的数量是否足够
-        Book book = bookMapper.getByNo(obj.getBookNo());
+        Book book = bookMapper.getByNo(borrow.getBookNo());
         if (Objects.isNull(book)) {
             throw new ServiceException("所借图书不存在");
         }
@@ -84,7 +84,7 @@ public class BorrowService implements IBorrowService {
             throw new ServiceException("图书数量不足");
         }
         Integer account = user.getAccount();
-        Integer score = book.getScore() * obj.getDays();  // score = 借1本的积分 * 天数
+        Integer score = book.getScore() * borrow.getDays();  // score = 借1本的积分 * 天数
         // 4. 校验用户账户余额
         if (score > account) {
             throw new ServiceException("用户积分不足");
@@ -96,10 +96,10 @@ public class BorrowService implements IBorrowService {
         book.setNums(book.getNums() - 1);
         bookMapper.updateById(book);
 
-        obj.setReturnDate(LocalDate.now().plus(obj.getDays(), ChronoUnit.DAYS));  // 当前的日期加 days 得到归还的日期
-        obj.setScore(score);
+        borrow.setReturnDate(LocalDate.now().plus(borrow.getDays(), ChronoUnit.DAYS));  // 当前的日期加 days 得到归还的日期
+        borrow.setScore(score);
         // 7. 新增借书记录
-        borrowMapper.save(obj);
+        borrowMapper.save(borrow);
     }
 
     @Override
@@ -111,28 +111,28 @@ public class BorrowService implements IBorrowService {
     // 还书逻辑
     @Transactional
     @Override
-    public void saveRetur(Retur obj) {
+    public void saveRetur(Retur borrow) {
         // 改状态
-        obj.setStatus("已归还");
-        borrowMapper.updateStatus("已归还", obj.getId());  // obj.getId() 是前端传来的借书id
-//        obj.setId(null);  // 新数据
-        obj.setRealDate(LocalDate.now());
-        borrowMapper.saveRetur(obj);
+        borrow.setStatus("已归还");
+        borrowMapper.updateStatus("已归还", borrow.getId());  // borrow.getId() 是前端传来的借书id
+        //borrow.setId(null);  // 新数据
+        borrow.setRealDate(LocalDate.now());
+        borrowMapper.saveRetur(borrow);
 
         // 图书数量增加
-        bookMapper.updateNumByNo(obj.getBookNo());
+        bookMapper.updateNumByNo(borrow.getBookNo());
 
         // 返还和扣除用户积分
-        Book book = bookMapper.getByNo(obj.getBookNo());
+        Book book = bookMapper.getByNo(borrow.getBookNo());
         if (book != null) {
             long until = 0;
-            if (obj.getRealDate().isBefore(obj.getReturnDate())) {
-                until = obj.getRealDate().until(obj.getReturnDate(), ChronoUnit.DAYS);
-            } else if (obj.getRealDate().isAfter(obj.getReturnDate())) {  // 逾期归还，要扣额外的积分
-                until = -obj.getReturnDate().until(obj.getRealDate(), ChronoUnit.DAYS);
+            if (borrow.getRealDate().isBefore(borrow.getReturnDate())) {
+                until = borrow.getRealDate().until(borrow.getReturnDate(), ChronoUnit.DAYS);
+            } else if (borrow.getRealDate().isAfter(borrow.getReturnDate())) {  // 逾期归还，要扣额外的积分
+                until = -borrow.getReturnDate().until(borrow.getRealDate(), ChronoUnit.DAYS);
             }
             int score = (int) until * book.getScore();  // 获取待归还的积分
-            User user = userMapper.getByUsername(obj.getUserNo());
+            User user = userMapper.getByUuid(borrow.getUserNo());
             int account = user.getAccount() + score;
             user.setAccount(account);
             if (account < 0) {
@@ -149,9 +149,9 @@ public class BorrowService implements IBorrowService {
     }
 
     @Override
-    public void update(Borrow obj) {
-        obj.setUpdatetime(LocalDate.now());
-        borrowMapper.updateById(obj);
+    public void update(Borrow borrow) {
+        borrow.setUpdatetime(LocalDate.now());
+        borrowMapper.updateById(borrow);
     }
 
     @Override

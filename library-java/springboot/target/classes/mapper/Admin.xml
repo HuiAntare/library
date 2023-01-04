@@ -10,7 +10,7 @@
     </insert>
 
     <update id="updateById">
-        update admin set username = #{username},phone = #{phone},email = #{email},updatetime = #{updatetime} where id = #{id}
+        update admin set username = #{username},phone = #{phone},email = #{email},updatetime = #{updatetime},status = #{status} where id = #{id}
     </update>
 
     <update id="updatePassword">
@@ -46,8 +46,8 @@
         select * from admin where id = #{id}
     </select>
 
-    <select id="getByUsernameAndPassword" resultType="com.example.springboot.entity.Admin">
-        select * from admin where username = #{username} and password = #{password}
+    <select id="getByUsername" resultType="com.example.springboot.entity.Admin">
+        select * from admin where username = #{username}
     </select>
 
 </mapper>
