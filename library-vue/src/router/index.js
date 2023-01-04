@@ -27,37 +27,27 @@ const routes = [
         component: () => import('@/views/home/HomeView.vue')
       },
       //  ====== User  =====
-      {
-        path: 'userList',
-        name: 'UserList',
-        component: () => import('@/views/user/User.vue')
-      },
-      {
-        path: 'addUser',
-        name: 'AddUser',
-        component: () => import('@/views/user/AddUser.vue')
-      },
-      {
-        path: 'editUser',
-        name: 'EditUser',
-        component: () => import('@/views/user/EditUser.vue')
-      },
+      { path: 'userList', name: 'UserList', component: () => import('@/views/user/User.vue')},
+      { path: 'addUser', name: 'AddUser', component: () => import('@/views/user/AddUser.vue')},
+      { path: 'editUser', name: 'EditUser', component: () => import('@/views/user/EditUser.vue')},
       //  ====== Admin  =====
-      {
-        path: 'adminList',
-        name: 'AdminList',
-        component: () => import('@/views/admin/Admin.vue')
-      },
-      {
-        path: 'addAdmin',
-        name: 'AddAdmin',
-        component: () => import('@/views/admin/Add.vue')
-      },
-      {
-        path: 'editAdmin',
-        name: 'EditAdmin',
-        component: () => import('@/views/admin/Edit.vue')
-      },
+      { path: 'adminList', name: 'AdminList', component: () => import('@/views/admin/Admin.vue')},
+      { path: 'addAdmin', name: 'AddAdmin', component: () => import('@/views/admin/Add.vue')},
+      { path: 'editAdmin', name: 'EditAdmin', component: () => import('@/views/admin/Edit.vue')},
+      //  ====== Category  =====
+      { path: 'categoryList', name: 'CategoryList', component: () => import('@/views/category/Category.vue')},
+      { path: 'addCategory', name: 'AddCategory', component: () => import('@/views/category/Add.vue')},
+      { path: 'editCategory', name: 'EditCategory', component: () => import('@/views/category/Edit.vue')},
+      //  ====== Book  =====
+      { path: 'bookList', name: 'BookList', component: () => import('@/views/book/Book.vue')},
+      { path: 'addBook', name: 'AddBook', component: () => import('@/views/book/Add.vue')},
+      { path: 'editBook', name: 'EditBook', component: () => import('@/views/book/Edit.vue')},
+      //  ====  Borrow  ====
+      { path: 'borrowList', name: 'BorrowList', component: () => import('@/views/borrow/Borrow.vue') },
+      { path: 'addBorrow', name: 'AddBorrow', component: () => import('@/views/borrow/Add.vue') },
+      { path: 'editBorrow', name: 'EditBorrow', component: () => import('@/views/borrow/Edit.vue') },
+      //  ====  Return  ====
+      { path: 'returList', name: 'returList', component: () => import('@/views/retur/List.vue') },
     ]
   },
 

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.CategoryMapper">
+    <!-- -->
+    <resultMap id="categoryMap" type="com.example.springboot.entity.Category">  <!-- id和下面对对应上 -->
+        <id column="id" property="id"/> <!-- column和数据库字段一样 , property和java一样 -->
+        <result column="name" property="name" />
+        <result column="remark" property="remark" />
+        <result column="pid" property="pid" />
+        <result column="createtime" property="createtime" />
+        <result column="updatetime" property="updatetime" />
+        <collection property="children" ofType="com.example.springboot.entity.Category"  column="id" select="selectByPid"></collection>
+    <!-- 把数据库的id传到collection,然后作为下面sql语句的参数 -->
+    </resultMap>
+
+    <select id="selectByPid" resultType="com.example.springboot.entity.Category">
+        select * from category where pid = #{id} order by id desc
+    </select>
+
+    <select id="listByCondition" resultMap="categoryMap">
+        select distinct c1.* from category c1
+        left join category c2
+        on c1.id = c2.pid
+        <where>
+            c1.pid is null
+            <if test="name != null and name != ''">
+               and (c1.name like concat('%',#{name},'%')) or c2.name like concat('%',#{name},'%')
+            </if>
+        </where>
+        order by id desc
+    </select>
+    <!-- -->
+
+    <insert id="save">
+        insert into category(name,remark,pid) values(#{name},#{remark},#{pid})
+    </insert>
+
+    <update id="updateById">
+        update category set name = #{name},remark = #{remark},updatetime = #{updatetime} where id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        delete from category where id = #{id}
+    </delete>
+
+    <select id="list" resultType="com.example.springboot.entity.Category">   <!-- id为方法名,结果为实体对象-->
+        select * from category order by id desc
+    </select>
+
+    <select id="getById" resultType="com.example.springboot.entity.Category">
+        select * from category where id = #{id}
+    </select>
+</mapper>

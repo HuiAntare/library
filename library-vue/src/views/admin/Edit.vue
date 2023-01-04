@@ -5,13 +5,13 @@
   <h2 style="margin-bottom: 30px">编辑管理员</h2>
 </div>
 <el-form :inline="true" :model="form" label-width="100px">
-  <el-form-item label="用户名 :">
+  <el-form-item label="用户名 :" prop="username">
     <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
   </el-form-item>
-  <el-form-item label="联系方式 :">
+  <el-form-item label="联系方式 :" prop="phone">
     <el-input v-model="form.phone" placeholder="请输入联系方式"></el-input>
   </el-form-item>
-  <el-form-item label="邮箱 :">
+  <el-form-item label="邮箱 :" prop="email">
     <el-input v-model="form.email" placeholder="请输入邮箱"></el-input>
   </el-form-item>
 </el-form>

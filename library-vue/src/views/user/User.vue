@@ -18,12 +18,24 @@
       <el-table-column prop="address" label="地址"></el-table-column>
       <el-table-column prop="phone" label="联系方式"></el-table-column>
       <el-table-column prop="sex" label="性别" width="80px"></el-table-column>
+      <el-table-column prop="account" label="账户积分"></el-table-column>
+      <el-table-column label="状态" width="100">
+        <template v-slot="scope">
+          <el-switch
+              v-model="scope.row.status"
+              @change="changeStatus(scope.row)"
+              active-color="#13ce66"
+              inactive-color="#ff4949">
+          </el-switch>
+        </template>
+      </el-table-column>
       <el-table-column prop="createtime" label="创建时间"></el-table-column>
       <el-table-column prop="updatetime" label="更新时间"></el-table-column>
 
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="240">
         <template v-slot="scope">
 <!--       scrop.row 就是当前的行数据-->
+          <el-button type="warning" @click="handleAccountAdd(scope.row)">充值</el-button>
           <el-button type="primary" @click="$router.push('/editUser?id=' + scope.row.id)">编辑</el-button>
 
           <el-popconfirm
@@ -52,6 +64,22 @@
           :total="total">               <!--page-size每页个数 -->
       </el-pagination>
     </div>
+
+    <el-dialog title="充值" :visible.sync="dialogFormVisible" width="30%">
+      <el-form :model="form" label-width="100px" ref="ruleForm" :rules="rules" style="width: 85%">
+        <el-form-item label="当前账户积分" prop="account">
+          <el-input disabled v-model="form.account" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="积分" prop="score">
+          <el-input v-model="form.score" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addAccount">确 定</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -61,21 +89,46 @@ import request from "@/utils/request";
 export default {
   name: 'User',
   data(){
+    const checkNums = (rule, value, callback) => {
+      value = parseInt(value)
+      if (value < 10 || value > 200) {
+        callback(new Error('请输入大于等于10小于或等于200的整数'));
+      }
+      callback()
+    };
     return {
       tableData:[],
       total: 0,
+      dialogFormVisible: false,
+      form:{},
       params:{               //创建一个params对象封装属性
         pageNum:1,
         pageSize:10,
         name:'',
         phone:''
       },
+      rules: {
+        score: [
+          { required: true, message: '请输入积分', trigger: 'blur'},
+          { validator: checkNums, trigger: 'blur'}
+        ]
+      }
     }
   },
   created() {
     this.load()
   },
   methods:{
+    changeStatus(row) {
+      request.put('/user/update', row).then(res => {
+        if (res.code === '200') {
+          this.$notify.success('操作成功')
+          this.load()
+        } else {
+          this.$notify.error(res.msg)
+        }
+      })
+    },
     load(){
       request.get('/user/page',{
         params:this.params                    //用装好的对象传入params,就可以向后台发送数据
@@ -110,6 +163,25 @@ export default {
         }
       })
     },
+    handleAccountAdd(row) {
+      this.form = JSON.parse(JSON.stringify(row))
+      this.dialogFormVisible = true
+    },
+    addAccount() {
+      this.$refs['ruleForm'].validate((valid) => {
+        if (valid) {
+          request.post('/user/account', this.form).then(res => {
+            if (res.code === '200') {
+              this.$notify.success('充值成功')
+              this.dialogFormVisible = false
+              this.load()
+            } else {
+              this.$notify.error(res.msg)
+            }
+          })
+        }
+      })
+    }
   }
 }
 </script>

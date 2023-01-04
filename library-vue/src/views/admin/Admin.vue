@@ -19,6 +19,17 @@
       <el-table-column prop="createtime" label="创建时间"></el-table-column>
       <el-table-column prop="updatetime" label="更新时间"></el-table-column>
 
+      <el-table-column label="状态" width="230">
+        <template v-slot="scope">
+          <el-switch
+              v-model="scope.row.status"
+              @change="changeStatus(scope.row)"
+              active-color="#13ce66"
+              inactive-color="#ff4949">
+          </el-switch>
+        </template>
+      </el-table-column>
+
       <el-table-column label="操作" width="230">
         <template v-slot="scope">
           <!--scope.row 就是当前的行数据-->
@@ -99,6 +110,21 @@ export default {
     this.load()
   },
   methods:{
+    changeStatus(row){
+      if(this.admin.id === row.id && row.status === false){
+        row.status = true
+        this.$notify.warning('您的操作不合法')
+        return
+      }
+      request.put('/admin/update',row).then(res => {
+        if(res.code === '200'){
+          this.$notify.success('操作成功')
+          this.load()
+        }else{
+          this.$notify.error(res.msg)
+        }
+      })
+    },
     handleChangePass(row){
       this.form = JSON.parse(JSON.stringify(row))
       this.dialogFormVisible=true

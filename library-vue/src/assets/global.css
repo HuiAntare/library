@@ -6,3 +6,6 @@ body{
 *{
     box-sizing:border-box;
 }
+th {
+    background-color: aliceblue !important;
+}
