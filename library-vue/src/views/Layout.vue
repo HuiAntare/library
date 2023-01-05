@@ -31,7 +31,7 @@
                  background-color="#545c64"
                  text-color="#fff"
                  active-text-color="#ffd04b"
-                 style="overflow: hidden"
+                 style="overflow: hidden;margin-bottom: 10px"
         >
           <!-- []设置默认打开的菜单 -->
           <el-menu-item index="/">                   <!-- index里的path -->

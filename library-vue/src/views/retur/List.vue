@@ -13,7 +13,7 @@
       <el-table-column prop="id" label="编号" width="80"></el-table-column>
       <el-table-column prop="bookName" label="图书名称"></el-table-column>
       <el-table-column prop="bookNo" label="图书标准码"></el-table-column>
-      <el-table-column prop="userNo" label="会员码"></el-table-column>
+      <el-table-column prop="userNo" label="学号"></el-table-column>
       <el-table-column prop="userName" label="用户名称"></el-table-column>
       <el-table-column prop="userPhone" label="用户联系方式"></el-table-column>
       <el-table-column prop="score" label="所用积分"></el-table-column>

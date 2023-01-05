@@ -23,7 +23,7 @@
       <el-form-item label="作者 :" prop="author">
         <el-input v-model="form.author" placeholder="请输入作者"></el-input>
       </el-form-item>
-      <el-form-item label="出版者 :" prop="publisher">
+      <el-form-item label="出版社 :" prop="publisher">
         <el-input v-model="form.publisher" placeholder="请输入出版社"></el-input>
       </el-form-item>
       <el-form-item label="分类 :" prop="category">
@@ -43,7 +43,7 @@
         <el-input v-model="form.nums" placeholder="请输入数量"></el-input>
       </el-form-item>
       <br>
-      <<el-form-item label="封面" prop="cover">
+      <el-form-item label="封面" prop="cover">
       <el-upload
           class="avatar-uploader"
           :action="'http://localhost:9090/api/book/file/upload?token=' + this.admin.token"

@@ -1,6 +1,9 @@
 <template>
   <div style="width: 80%">
-    <div style="margin-bottom: 30px">新增借书记录</div>
+    <div style="text-align: center">
+      <img src="@/assets/bookLogo.png" alt="" style="width: 65px;position: relative;top: 12px">
+      <h2 style="margin-bottom: 30px">新增图书</h2>
+    </div>
     <el-form :inline="true" :rules="rules" ref="ruleForm" :model="form" label-width="100px">
       <el-form-item label="图书标准码" prop="bookNo">
         <el-select v-model="form.bookNo" clearable filterable placeholder="请选择" @change="selBook">

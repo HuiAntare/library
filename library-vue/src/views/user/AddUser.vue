@@ -59,7 +59,7 @@ export default {
         return callback(new Error('学号不能为空'));
       }
       if (!/^[1-9][0-9]{5}[(A-Z)|(0-9)][0-9]{3}$/.test(value)) {
-        callback(new Error('请输入数字值'));
+        callback(new Error('请输入合法学号'));
       }
       if(value.length != 10){
         callback(new Error('请输入合法学号'));
