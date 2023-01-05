@@ -1,12 +1,9 @@
 package com.example.springboot.mapper;
 
-import com.example.springboot.common.LoginResult;
 import com.example.springboot.controller.request.AdminPageRequest;
-import com.example.springboot.controller.request.LoginRequest;
 import com.example.springboot.controller.request.PassWordRequest;
 import com.example.springboot.entity.Admin;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

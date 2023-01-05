@@ -68,13 +68,13 @@ public class BorrowService implements IBorrowService {
     @Override
     @Transactional
     public void save(Borrow borrow) {
-        // 1. 校验用户的积分是否足够
+        // 1. 校验用户是否存在
         String userNo = borrow.getUserNo();
         User user = userMapper.getByUuid(userNo);
         if (Objects.isNull(user)) {
             throw new ServiceException("用户不存在");
         }
-        // 2. 校验图书的数量是否足够
+        // 2. 校验图书是否存在
         Book book = bookMapper.getByNo(borrow.getBookNo());
         if (Objects.isNull(book)) {
             throw new ServiceException("所借图书不存在");

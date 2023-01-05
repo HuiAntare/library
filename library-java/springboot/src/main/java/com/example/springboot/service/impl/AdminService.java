@@ -25,7 +25,7 @@ import java.util.List;
 @Slf4j
 public class AdminService implements IAdminService {
 
-    private static final String DEFAULT_PASSWORD = "123";
+    private static final String DEFAULT_PASSWORD = "root";
     private static final String PASSWORD_SALT = "****";
 
     @Autowired       //导入AdminMapper,

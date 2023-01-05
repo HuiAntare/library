@@ -53,7 +53,7 @@ public class TokenUtils {
         try {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             token = request.getHeader("token");   //可以从request获取token(第一步获取)
-            if (StrUtil.isNotBlank(token)) {
+            if (StrUtil.isBlank(token)) {
                 token = request.getParameter("token");
                 //或者可以从url参数里面获取( 如/admin?token=xxxx ; 第二次获取)
             }
