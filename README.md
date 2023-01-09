@@ -13,6 +13,4 @@ Mysql 5.7(数据库)
 Navicat(数据可视化软件)
 postman(接口调试工具)
 ```
-
-
-
+>This priject is over currently. Just as a practive project. if have any questions ,please talk together.
